@@ -1,0 +1,57 @@
+@page
+@model OrphanageWeb.Pages.Sponsors.IndexModel
+@{
+    ViewData["Title"] = "Sponsors";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Sponsors</h1>
+            <p class="page-subtitle">Live data from SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/Sponsors/Create">Add Sponsor</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S_ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Total Donation</th>
+                        <th>Sponsored</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model.Sponsors)
+                    {
+                        <tr>
+                            <td>@s.S_ID</td>
+                            <td>@s.S_Fname</td>
+                            <td>@s.S_Lname</td>
+                            <td>@s.S_email</td>
+                            <td>@s.S_address</td>
+                            <td><span class="pill">@s.total_donation</span></td>
+                            <td><span class="pill">@s.SponsoredCount</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

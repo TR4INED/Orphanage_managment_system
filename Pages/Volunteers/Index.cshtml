@@ -1,0 +1,51 @@
+@page
+@model OrphanageWeb.Pages.Volunteers.IndexModel
+@{
+    ViewData["Title"] = "Volunteers";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Volunteers</h1>
+            <p class="page-subtitle">Live data from SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/Volunteers/Create">Add Volunteer</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>V_ID</th>
+                        <th>Name</th>
+                        <th>Hours</th>
+                        <th>Assisted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model.Volunteers)
+                    {
+                        <tr>
+                            <td>@v.V_ID</td>
+                            <td>@v.V_name</td>
+                            <td>@v.V_hours</td>
+                            <td><span class="pill">@v.AssistedCount</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+@page
+@model OrphanageWeb.Pages.EducationRecords.CreateModel
+@{
+    ViewData["Title"] = "Add Education Record";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Education Record</h1>
+            <p class="page-subtitle">Creates a real row in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/EducationRecords/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.DateAcquired">Date Acquired</label>
+                    <input asp-for="Input.DateAcquired" type="date" />
+                    <span class="validation" asp-validation-for="Input.DateAcquired"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Certificate">Certificate</label>
+                    <input asp-for="Input.Certificate" placeholder="e.g., Certificate 31" />
+                    <span class="validation" asp-validation-for="Input.Certificate"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.OrphanId">Orphan (O_ID)</label>
+                    <input asp-for="Input.OrphanId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.SchoolId">School (Sch_ID)</label>
+                    <input asp-for="Input.SchoolId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.SchoolId"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/EducationRecords/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

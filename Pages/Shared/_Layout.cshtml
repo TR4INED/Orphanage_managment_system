@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Orphanage Management</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OrphanageWeb.styles.css" asp-append-version="true" />
+</head>
+<body>
+@{
+    var currentPage = (ViewContext.RouteData.Values["page"]?.ToString() ?? string.Empty);
+}
+
+    <div class="app">
+        <header>
+            <div class="topbar">
+                <div class="container topbar-inner">
+                    <div class="topbar-left">
+                        <a class="brand" asp-area="" asp-page="/Index">Orphanage Management</a>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a class="btn topbar-login" asp-area="" asp-page="/Logout">Logout</a>
+                            <a class="btn topbar-login" asp-area="" asp-page="/Account/ChangePassword">Change Password</a>
+                        }
+                        else
+                        {
+                            <a class="btn topbar-login" asp-area="" asp-page="/Login">Login</a>
+                        }
+                    </div>
+                    <nav class="nav">
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            if (User.IsInRole("Sponsor"))
+                            {
+                                <a class="nav-link @(currentPage.StartsWith("/SponsorPortal") ? "active" : "")" asp-area="" asp-page="/SponsorPortal/Index">Sponsor Portal</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link @(currentPage == "/Index" ? "active" : "")" asp-area="" asp-page="/Index">Dashboard</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Admins") ? "active" : "")" asp-area="" asp-page="/Admins/Index">Admins</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Orphans") ? "active" : "")" asp-area="" asp-page="/Orphans/Index">Orphans</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Volunteers") ? "active" : "")" asp-area="" asp-page="/Volunteers/Index">Volunteers</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Sponsors") ? "active" : "")" asp-area="" asp-page="/Sponsors/Index">Sponsors</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Donations") ? "active" : "")" asp-area="" asp-page="/Donations/Index">Donations</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Items") ? "active" : "")" asp-area="" asp-page="/Items/Index">Items</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Events") ? "active" : "")" asp-area="" asp-page="/Events/Index">Events</a>
+                                <a class="nav-link @(currentPage.StartsWith("/MealPlans") ? "active" : "")" asp-area="" asp-page="/MealPlans/Index">Meal Plans</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Schools") ? "active" : "")" asp-area="" asp-page="/Schools/Index">Schools</a>
+                                <a class="nav-link @(currentPage.StartsWith("/EducationRecords") ? "active" : "")" asp-area="" asp-page="/EducationRecords/Index">Education</a>
+                                <a class="nav-link @(currentPage.StartsWith("/Assignments") ? "active" : "")" asp-area="" asp-page="/Assignments/Index">Assignments</a>
+                            }
+                        }
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <main role="main" class="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

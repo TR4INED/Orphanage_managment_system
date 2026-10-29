@@ -1,0 +1,47 @@
+@page
+@model OrphanageWeb.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="page" style="padding-top: 34px;">
+    <div class="surface" style="width: 500px; margin: 0 auto; padding: 18px;">
+        <h1 class="page-title" style="margin-bottom: 6px;">Welcome back</h1>
+        <p class="page-subtitle" style="margin-top: 0;">Login as Admin or Sponsor.</p>
+
+        <div class="form" style="padding: 0; margin-top: 14px;">
+            <form method="post">
+                <div class="form-grid" style="grid-template-columns: 1fr;">
+                    <div class="field">
+                        <label asp-for="Input.Role">Role</label>
+                        <select asp-for="Input.Role">
+                            <option value="Admin">Admin</option>
+                            <option value="Sponsor">Sponsor</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="Input.Id">ID</label>
+                        <input asp-for="Input.Id" type="string" min="1" placeholder="....." />
+                        <span class="validation" asp-validation-for="Input.Id"></span>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="Input.Password">Password</label>
+                        <input asp-for="Input.Password" type="password" placeholder="shh.." />
+                        <span class="validation" asp-validation-for="Input.Password"></span>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 16px;">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </div>
+            </form>
+
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="validation" style="margin-top: 12px;">@Model.ErrorMessage</div>
+            }
+        </div>
+    </div>
+</div>

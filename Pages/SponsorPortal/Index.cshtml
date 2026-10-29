@@ -1,0 +1,67 @@
+@page
+@model OrphanageWeb.Pages.SponsorPortal.IndexModel
+@{
+    ViewData["Title"] = "Sponsor Portal";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Sponsor Portal</h1>
+            <p class="page-subtitle">Increase your total donations for children you already sponsor.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <div class="surface card" style="border-color: rgba(34, 197, 94, 0.55); background: rgba(34, 197, 94, 0.10);">
+            <h3 class="card-title">Done</h3>
+            <p class="card-meta">@Model.StatusMessage</p>
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface card" style="margin-top: 14px;">
+        <h3 class="card-title">Your total donation</h3>
+        <p class="card-meta">@Model.TotalDonation.ToString("0.00")</p>
+    </div>
+
+    <div class="surface form" style="margin-top: 14px;">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.OrphanId">Sponsored child</label>
+                    <select asp-for="Input.OrphanId">
+                        @foreach (var o in Model.SponsoredOrphans)
+                        {
+                            <option value="@o.Id">@o.Name</option>
+                        }
+                    </select>
+                    <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Amount">Increase amount</label>
+                    <input asp-for="Input.Amount" type="number" step="0.01" min="1" placeholder="e.g., 100" />
+                    <span class="validation" asp-validation-for="Input.Amount"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Increase</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

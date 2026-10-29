@@ -1,0 +1,53 @@
+@page
+@model OrphanageWeb.Pages.EducationRecords.IndexModel
+@{
+    ViewData["Title"] = "Education Records";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Education Records</h1>
+            <p class="page-subtitle">Live data from SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/EducationRecords/Create">Add Record</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>R_ID</th>
+                        <th>Date Acquired</th>
+                        <th>Certificate</th>
+                        <th>Orphan (O_ID)</th>
+                        <th>School (Sch_ID)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Records)
+                    {
+                        <tr>
+                            <td>@r.R_ID</td>
+                            <td>@r.Date_acquired.ToString("yyyy-MM-dd")</td>
+                            <td>@r.certificate</td>
+                            <td>@r.O_ID</td>
+                            <td>@r.Sch_ID</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

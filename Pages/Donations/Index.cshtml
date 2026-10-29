@@ -1,0 +1,55 @@
+@page
+@model OrphanageWeb.Pages.Donations.IndexModel
+@{
+    ViewData["Title"] = "Donations";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Donations</h1>
+            <p class="page-subtitle">Live data from SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/Donations/Create">Add Donation</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>D_ID</th>
+                        <th>Date</th>
+                        <th>Sponsor (S_ID)</th>
+                        <th>Orphan (O_ID)</th>
+                        <th>Admin (A_ID)</th>
+                        <th>Items</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var d in Model.Donations)
+                    {
+                        <tr>
+                            <td>@d.D_ID</td>
+                            <td>@d.D_date.ToString("yyyy-MM-dd")</td>
+                            <td>@d.S_ID</td>
+                            <td>@d.O_ID</td>
+                            <td>@d.A_ID</td>
+                            <td><span class="pill">@d.ItemCount</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

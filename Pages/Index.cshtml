@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Quick access to the main sections</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/Orphans/Create">Add Orphan</a>
+            <a class="btn btn-secondary" asp-page="/Donations/Create">Add Donation</a>
+        </div>
+    </div>
+
+    <div class="grid grid-4">
+        <a class="surface card" asp-page="/Orphans/Index">
+            <h3 class="card-title">Orphans</h3>
+            <p class="card-meta">Profiles, basic info overview.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Volunteers/Index">
+            <h3 class="card-title">Volunteers</h3>
+            <p class="card-meta">Volunteer list, hours, and assignment overview.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Sponsors/Index">
+            <h3 class="card-title">Sponsors</h3>
+            <p class="card-meta">Sponsor profiles and total donations.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Donations/Index">
+            <h3 class="card-title">Donations</h3>
+            <p class="card-meta">Donations log and item tracking.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Events/Index">
+            <h3 class="card-title">Events</h3>
+            <p class="card-meta">Event schedule, locations, and participants.</p>
+        </a>
+
+        <a class="surface card" asp-page="/MealPlans/Index">
+            <h3 class="card-title">Meal Plans</h3>
+            <p class="card-meta">Meal plans and served-to overview.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Schools/Index">
+            <h3 class="card-title">Schools</h3>
+            <p class="card-meta">Schools directory and education records.</p>
+        </a>
+
+        <a class="surface card" asp-page="/Account/ChangePassword">
+            <h3 class="card-title">Account</h3>
+            <p class="card-meta">Account page to modify password.</p>
+        </a>
+    </div>
+</div>

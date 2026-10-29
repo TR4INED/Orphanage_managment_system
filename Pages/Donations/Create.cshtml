@@ -1,0 +1,89 @@
+@page
+@model OrphanageWeb.Pages.Donations.CreateModel
+@{
+    ViewData["Title"] = "Add Donation";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Donation</h1>
+            <p class="page-subtitle">Creates a donation and one item in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/Donations/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.DonationDate">Donation Date</label>
+                    <input asp-for="Input.DonationDate" type="date" />
+                    <span class="validation" asp-validation-for="Input.DonationDate"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.SponsorId">Sponsor (S_ID)</label>
+                    <input asp-for="Input.SponsorId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.SponsorId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.OrphanId">Orphan (O_ID)</label>
+                    <input asp-for="Input.OrphanId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.AdminId">Admin (A_ID)</label>
+                    <input asp-for="Input.AdminId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.AdminId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.ItemType">Item Type</label>
+                    <select asp-for="Input.ItemType">
+                        <option value="Clothes">Clothes</option>
+                        <option value="Food">Food</option>
+                        <option value="Books">Books</option>
+                        <option value="Medicine">Medicine</option>
+                        <option value="Toys">Toys</option>
+                    </select>
+                    <span class="validation" asp-validation-for="Input.ItemType"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.ItemName">Item Name</label>
+                    <input asp-for="Input.ItemName" placeholder="e.g., Rice" />
+                    <span class="validation" asp-validation-for="Input.ItemName"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Quantity">Quantity</label>
+                    <input asp-for="Input.Quantity" type="number" min="1" placeholder="e.g., 5" />
+                    <span class="validation" asp-validation-for="Input.Quantity"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/Donations/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

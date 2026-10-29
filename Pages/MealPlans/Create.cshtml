@@ -1,0 +1,53 @@
+@page
+@model OrphanageWeb.Pages.MealPlans.CreateModel
+@{
+    ViewData["Title"] = "Add Meal Plan";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Meal Plan</h1>
+            <p class="page-subtitle">Creates a meal plan and one Served_to mapping in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/MealPlans/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.Meal">Meal Plan</label>
+                    <input asp-for="Input.Meal" placeholder="e.g., Plan 01" />
+                    <span class="validation" asp-validation-for="Input.Meal"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.OrphanId">Orphan (O_ID)</label>
+                    <input asp-for="Input.OrphanId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/MealPlans/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

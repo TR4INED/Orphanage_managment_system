@@ -1,0 +1,71 @@
+@page
+@model OrphanageWeb.Pages.Sponsors.CreateModel
+@{
+    ViewData["Title"] = "Add Sponsor";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Sponsor</h1>
+            <p class="page-subtitle">Creates a real row in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/Sponsors/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.FirstName">First Name</label>
+                    <input asp-for="Input.FirstName" placeholder="e.g., Sara" />
+                    <span class="validation" asp-validation-for="Input.FirstName"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.LastName">Last Name</label>
+                    <input asp-for="Input.LastName" placeholder="e.g., Youssef" />
+                    <span class="validation" asp-validation-for="Input.LastName"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Email">Email</label>
+                    <input asp-for="Input.Email" type="email" placeholder="name@mail.com" />
+                    <span class="validation" asp-validation-for="Input.Email"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Address">Address</label>
+                    <input asp-for="Input.Address" placeholder="City" />
+                    <span class="validation" asp-validation-for="Input.Address"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.TotalDonation">Total Donation</label>
+                    <input asp-for="Input.TotalDonation" type="number" min="0" step="0.01" placeholder="e.g., 5000" />
+                    <span class="validation" asp-validation-for="Input.TotalDonation"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/Sponsors/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

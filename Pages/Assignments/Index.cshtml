@@ -1,0 +1,189 @@
+@page
+@model OrphanageWeb.Pages.Assignments.IndexModel
+@{
+    ViewData["Title"] = "Assignments";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Assignments</h1>
+            <p class="page-subtitle">Live junction tables from (OrphanageDB) + add new mappings.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="grid assignments-grid">
+        <div class="surface card assignments-card">
+            <h3 class="card-title">Add Mapping</h3>
+            <p class="card-meta">Choose the relationship and select names (no need to memorize IDs).</p>
+
+            <form method="post" style="margin-top: 12px;">
+                <div class="validation" asp-validation-summary="All"></div>
+
+                <div class="form-grid assignments-form-grid">
+                    <div class="field mapping-type">
+                        <label asp-for="Input.MappingType">Mapping Type</label>
+                        <select asp-for="Input.MappingType">
+                            <option value="AssistedBy">Assisted_by (Volunteer → Orphan)</option>
+                            <option value="SponsoredBy">Sponsored_by (Sponsor → Orphan)</option>
+                            <option value="ServedTo">Served_to (Meal Plan → Orphan)</option>
+                        </select>
+                        <span class="validation" asp-validation-for="Input.MappingType"></span>
+                    </div>
+
+                    <div class="field" data-mapping="AssistedBy" style="margin-top: 15px;">
+                        <label asp-for="Input.VolunteerId">Volunteer</label>
+                        <select asp-for="Input.VolunteerId">
+                            @foreach (var v in Model.VolunteerOptions)
+                            {
+                                <option value="@v.Id">@v.Name</option>
+                            }
+                        </select>
+                        <span class="validation" asp-validation-for="Input.VolunteerId"></span>
+                    </div>
+
+                    <div class="field" data-mapping="SponsoredBy" style="margin-top: 15px;">
+                        <label asp-for="Input.SponsorId">Sponsor</label>
+                        <select asp-for="Input.SponsorId">
+                            @foreach (var s in Model.SponsorOptions)
+                            {
+                                <option value="@s.Id">@s.Name</option>
+                            }
+                        </select>
+                        <span class="validation" asp-validation-for="Input.SponsorId"></span>
+                    </div>
+
+                    <div class="field" data-mapping="ServedTo" style="margin-top: 15px;">
+                        <label asp-for="Input.MealplanId">Meal Plan</label>
+                        <select asp-for="Input.MealplanId">
+                            @foreach (var mp in Model.MealplanOptions)
+                            {
+                                <option value="@mp.Id">@mp.Name</option>
+                            }
+                        </select>
+                        <span class="validation" asp-validation-for="Input.MealplanId"></span>
+                    </div>
+
+                    <div class="field" style="margin-top: 15px;" >
+                        <label asp-for="Input.OrphanId">Orphan</label>
+                        <select asp-for="Input.OrphanId">
+                            @foreach (var o in Model.OrphanOptions)
+                            {
+                                <option value="@o.Id">@o.Name</option>
+                            }
+                        </select>
+                        <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 81px;">
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="surface card assignments-card">
+            <h3 class="card-title">Assisted_by (Volunteer → Orphan)</h3>
+            <p class="card-meta">Volunteer-to-orphan assistance mapping.</p>
+            <div class="table-wrap assignments-table-wrap" style="margin-top: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Volunteer</th>
+                            <th>Orphan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.AssistedBy)
+                        {
+                            <tr>
+                                <td>@(!string.IsNullOrWhiteSpace(row.VolunteerName) ? row.VolunteerName : row.V_ID.ToString())</td>
+                                <td>@(!string.IsNullOrWhiteSpace(row.OrphanName) ? row.OrphanName : row.O_ID.ToString())</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="surface card assignments-card">
+            <h3 class="card-title">Sponsored_by (S_ID, O_ID)</h3>
+            <p class="card-meta">Sponsor-to-orphan sponsorship mapping.</p>
+            <div class="table-wrap assignments-table-wrap" style="margin-top: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sponsor</th>
+                            <th>Orphan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.SponsoredBy)
+                        {
+                            <tr>
+                                <td>@(!string.IsNullOrWhiteSpace(row.SponsorName) ? row.SponsorName : row.S_ID.ToString())</td>
+                                <td>@(!string.IsNullOrWhiteSpace(row.OrphanName) ? row.OrphanName : row.O_ID.ToString())</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="surface card assignments-card">
+            <h3 class="card-title">Served_to (MP_ID, O_ID)</h3>
+            <p class="card-meta">Meal-to-orphan mealplan mapping.</p>
+            <div class="table-wrap assignments-table-wrap" style="margin-top: 10px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Meal Plan</th>
+                            <th>Orphan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.ServedTo)
+                        {
+                            <tr>
+                                <td>@(!string.IsNullOrWhiteSpace(row.MealplanName) ? row.MealplanName : row.MP_ID.ToString())</td>
+                                <td>@(!string.IsNullOrWhiteSpace(row.OrphanName) ? row.OrphanName : row.O_ID.ToString())</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            function applyMappingVisibility() {
+                var mappingSelect = document.getElementById('Input_MappingType');
+                if (!mappingSelect) return;
+                var current = mappingSelect.value;
+                document.querySelectorAll('[data-mapping]').forEach(function (el) {
+                    el.style.display = (el.getAttribute('data-mapping') === current) ? '' : 'none';
+                });
+            }
+
+            document.addEventListener('change', function (e) {
+                if (e.target && e.target.id === 'Input_MappingType') {
+                    applyMappingVisibility();
+                }
+            });
+
+            applyMappingVisibility();
+        })();
+    </script>
+}

@@ -1,0 +1,50 @@
+@page
+@model OrphanageWeb.Pages.Items.IndexModel
+@{
+    ViewData["Title"] = "Items";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Items</h1>
+            <p class="page-subtitle">Items received in donations (live data from SQL Server).</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>I_ID</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Donation (D_ID)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Items)
+                    {
+                        <tr>
+                            <td>@i.I_ID</td>
+                            <td><span class="pill">@i.I_type</span></td>
+                            <td>@i.I_name</td>
+                            <td>@i.I_quantity</td>
+                            <td>@i.D_ID</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

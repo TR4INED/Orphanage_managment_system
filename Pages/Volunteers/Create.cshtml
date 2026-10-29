@@ -1,0 +1,59 @@
+@page
+@model OrphanageWeb.Pages.Volunteers.CreateModel
+@{
+    ViewData["Title"] = "Add Volunteer";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Volunteer</h1>
+            <p class="page-subtitle">Creates a real row in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/Volunteers/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.Name">Name</label>
+                    <input asp-for="Input.Name" placeholder="e.g., Ahmed Salem" />
+                    <span class="validation" asp-validation-for="Input.Name"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Hours">Hours</label>
+                    <input asp-for="Input.Hours" type="number" min="0" placeholder="e.g., 12" />
+                    <span class="validation" asp-validation-for="Input.Hours"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.AssistOrphanId">Assign to Orphan (O_ID)</label>
+                    <input asp-for="Input.AssistOrphanId" type="number" min="1" placeholder="optional" />
+                    <span class="validation" asp-validation-for="Input.AssistOrphanId"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/Volunteers/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

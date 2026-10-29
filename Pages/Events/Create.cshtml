@@ -1,0 +1,71 @@
+@page
+@model OrphanageWeb.Pages.Events.CreateModel
+@{
+    ViewData["Title"] = "Add Event";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Add Event</h1>
+            <p class="page-subtitle">Creates a real row in SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn" asp-page="/Events/Index">Back to list</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <div class="surface form">
+        <form method="post">
+            <div class="validation" asp-validation-summary="All"></div>
+            <div class="form-grid">
+                <div class="field">
+                    <label asp-for="Input.EventDate">Event Date</label>
+                    <input asp-for="Input.EventDate" type="date" />
+                    <span class="validation" asp-validation-for="Input.EventDate"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Participants">Participants</label>
+                    <input asp-for="Input.Participants" type="number" min="0" placeholder="e.g., 50" />
+                    <span class="validation" asp-validation-for="Input.Participants"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Location">Location</label>
+                    <input asp-for="Input.Location" placeholder="e.g., Cairo" />
+                    <span class="validation" asp-validation-for="Input.Location"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.AdminId">Admin (A_ID)</label>
+                    <input asp-for="Input.AdminId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.AdminId"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.OrphanId">Orphan (O_ID)</label>
+                    <input asp-for="Input.OrphanId" type="number" min="1" placeholder="e.g., 1" />
+                    <span class="validation" asp-validation-for="Input.OrphanId"></span>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn" asp-page="/Events/Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

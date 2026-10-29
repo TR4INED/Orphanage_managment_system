@@ -1,0 +1,56 @@
+@page
+@model OrphanageWeb.Pages.Orphans.IndexModel
+@{
+    ViewData["Title"] = "Orphans";
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Orphans</h1>
+            <p class="page-subtitle">Live data from SQL Server (OrphanageDB).</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-primary" asp-page="/Orphans/Create">Add Orphan</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="surface card" style="border-color: rgba(239, 68, 68, 0.55); background: rgba(239, 68, 68, 0.08);">
+            <h3 class="card-title">Database error</h3>
+            <p class="card-meta">@Model.ErrorMessage</p>
+            <p class="card-meta">Check the connection string in <span class="pill">appsettings.json</span> and ensure SQL Server is running and the database exists.</p>
+        </div>
+    }
+
+    <div class="surface">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>O_ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Date of Birth</th>
+                        <th>Admin (A_ID)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var orphan in Model.Orphans)
+                    {
+                        <tr>
+                            <td>@orphan.O_ID</td>
+                            <td>@orphan.O_Fname</td>
+                            <td>@orphan.O_Lname</td>
+                            <td><span class="pill">@orphan.O_gender</span></td>
+                            <td>@orphan.O_DoB.ToString("yyyy-MM-dd")</td>
+                            <td>@orphan.A_ID</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
